@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Exports;
+
+use App\Models\SanPham;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use Maatwebsite\Excel\Concerns\WithMapping;
+
+class SanPhamExport implements FromCollection, WithHeadings, WithCustomStartCell, WithMapping
+{
+    public function collection(): Collection
+    {
+        return SanPham::all();
+    }
+	
+	public function headings(): array
+	{
+		return [
+			'id',
+			'loaisanpham_id',
+			'hangsanxuat_id',
+			'tensanpham',
+			'tensanpham_slug',
+			'soluong',
+			'dongia',
+			'hinhanh',
+			'motasanpham',
+		];
+	}
+	
+	public function map($row): array
+	{
+		return [
+			$row->id,
+			$row->loaisanpham_id,
+			$row->hangsanxuat_id,
+			$row->tensanpham,
+			$row->tensanpham_slug,
+			$row->soluong,
+			$row->dongia, 
+			$row->hinhanh,
+			$row->motasanpham,
+		];
+	}
+	
+	public function startCell(): string
+	{
+		return 'A1';
+	}
+}
